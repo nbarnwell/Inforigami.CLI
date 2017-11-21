@@ -21,7 +21,7 @@ namespace Inforigami.CLI
 
         private bool IsDefinedAsCommand(Type type)
         {
-            return typeof(ICommand).IsAssignableFrom(type) && type.IsClass;
+            return typeof(ICommand).IsAssignableFrom(type) && type.IsClass && !type.IsAbstract;
         }
 
         private bool IsAssembly(string arg)

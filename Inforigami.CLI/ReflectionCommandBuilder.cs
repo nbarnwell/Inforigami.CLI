@@ -30,7 +30,7 @@ namespace Inforigami.CLI
             Type commandType;
             if (!_commandTypes.TryGetValue(instruction.CommandName, out commandType))
             {
-                throw new InvalidOperationException($"No command matching \"{instruction.CommandName}\" found.");
+                throw new UnknownCommandException($"No command matching \"{instruction.CommandName}\" found.", instruction.CommandName);
             }
 
             var command = Activator.CreateInstance(commandType, null);

@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4464A594-4726-469B-9487-EB853866EA38}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{5588C40E-2C8C-4D13-9E3D-05C2E93E0038}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Inforigami.CLI</RootNamespace>
-    <AssemblyName>Inforigami.CLI</AssemblyName>
+    <RootNamespace>Inforigami.CLI.Host</RootNamespace>
+    <AssemblyName>Inforigami.CLI.Host</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,12 +33,35 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.2.0\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Windsor.4.1.0\lib\net45\Castle.Windsor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Inforigami.Regalo.Core, Version=0.25.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Inforigami.Regalo.Core.0.25.0\lib\net40-client\Inforigami.Regalo.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Inforigami.Regalo.Interfaces, Version=0.25.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Inforigami.Regalo.Interfaces.0.25.0\lib\portable40-net40+win8+wpa81\Inforigami.Regalo.Interfaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Inforigami.Regalo.Messaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Inforigami.Regalo.Messaging.1.0.0\lib\net40-client\Inforigami.Regalo.Messaging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,27 +70,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Argument.cs" />
-    <Compile Include="ArgumentParser.cs" />
-    <Compile Include="DirectoryScanningCommandTypeProvider.cs" />
-    <Compile Include="IArgumentParser.cs" />
-    <Compile Include="ICommandBuilder.cs" />
-    <Compile Include="ICommandTypeProvider.cs" />
-    <Compile Include="IEnumerableExtensions.cs" />
-    <Compile Include="IInstructionParser.cs" />
-    <Compile Include="Instruction.cs" />
-    <Compile Include="InstructionParser.cs" />
-    <Compile Include="IStringTokenizer.cs" />
-    <Compile Include="IWelcomePage.cs" />
-    <Compile Include="KnownCommandTypeProvider.cs" />
+    <Compile Include="App\Application.cs" />
+    <Compile Include="App\Helping\Help.cs" />
+    <Compile Include="App\Helping\HelpHandler.cs" />
+    <Compile Include="App\Quitting\Quit.cs" />
+    <Compile Include="App\Quitting\QuitHandler.cs" />
+    <Compile Include="Infrastructure\IoC\Installer.cs" />
+    <Compile Include="Infrastructure\IoC\RegaloCoreInstaller.cs" />
+    <Compile Include="Infrastructure\RegaloLogger.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.Version.cs" />
-    <Compile Include="QuotedStringTokenizer.cs" />
-    <Compile Include="ReflectionCommandBuilder.cs" />
-    <Compile Include="UnknownCommandException.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Inforigami.CLI\Inforigami.CLI.csproj">
+      <Project>{4464A594-4726-469B-9487-EB853866EA38}</Project>
+      <Name>Inforigami.CLI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
