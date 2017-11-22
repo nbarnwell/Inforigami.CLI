@@ -9,7 +9,8 @@ md $outputDir -f | out-null
 del $outputDir\*
 
 $projectsToPackage = @(
-    'Inforigami.CLI.csproj'
+    'Inforigami.CLI.csproj',
+    'Inforigami.CLI.Host.csproj'
 )
 
 gci $scriptDir -include $projectsToPackage -recurse | 
