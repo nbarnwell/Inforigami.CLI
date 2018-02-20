@@ -2,6 +2,7 @@
 {
     using Inforigami.Regalo.Interfaces;
 
+    [CommandAlias("?")]
     public class Help : Command
     {
         

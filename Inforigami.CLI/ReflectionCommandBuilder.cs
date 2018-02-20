@@ -14,8 +14,12 @@ namespace Inforigami.CLI
         {
             if (commandTypeProvider == null) throw new ArgumentNullException(nameof(commandTypeProvider));
 
-            _commandTypes = commandTypeProvider.GetCommandTypes()
-                                               .ToDictionary(CommandNameFromType, x => x);
+            _commandTypes =
+                commandTypeProvider.GetCommandTypes()
+                                   .SelectMany(
+                                       CommandNamesForType,
+                                       (type, name) => new { CommandType = type, CommandName = name })
+                                   .ToDictionary(x => x.CommandName, x => x.CommandType);
         }
 
         private string CommandNameFromType(Type commandType)
@@ -23,6 +27,20 @@ namespace Inforigami.CLI
             var commandName = Regex.Replace(commandType.Name, @"Command$", "");
             commandName = commandName.ToLower();
             return commandName;
+        }
+
+        private IEnumerable<string> CommandNamesForType(Type commandType)
+        {
+            yield return CommandNameFromType(commandType);
+
+            var aliases = 
+                commandType.GetCustomAttributes<CommandAliasAttribute>()
+                           .Select(x => x.Alias);
+
+            foreach (var alias in aliases)
+            {
+                yield return alias;
+            }
         }
 
         public object Create(Instruction instruction)

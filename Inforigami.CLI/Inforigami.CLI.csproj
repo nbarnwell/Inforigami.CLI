@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Argument.cs" />
     <Compile Include="ArgumentParser.cs" />
+    <Compile Include="CommandAliasAttribute.cs" />
     <Compile Include="DirectoryScanningCommandTypeProvider.cs" />
     <Compile Include="IArgumentParser.cs" />
     <Compile Include="ICommandBuilder.cs" />
