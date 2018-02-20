@@ -27,10 +27,12 @@ namespace Inforigami.CLI
 
         public object Create(Instruction instruction)
         {
+            var commandName = instruction.CommandName.ToLower();
+
             Type commandType;
-            if (!_commandTypes.TryGetValue(instruction.CommandName, out commandType))
+            if (!_commandTypes.TryGetValue(commandName, out commandType))
             {
-                throw new UnknownCommandException($"No command matching \"{instruction.CommandName}\" found.", instruction.CommandName);
+                throw new UnknownCommandException($"No command matching \"{commandName}\" found.", instruction.CommandName);
             }
 
             var command = Activator.CreateInstance(commandType, null);
