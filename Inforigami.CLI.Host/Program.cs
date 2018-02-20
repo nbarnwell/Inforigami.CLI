@@ -1,4 +1,6 @@
-﻿namespace Inforigami.CLI.Host
+﻿using Castle.MicroKernel.Registration;
+
+namespace Inforigami.CLI.Host
 {
     using System;
 
@@ -17,7 +19,7 @@
             WriteStatus("Loading components...");
 
             var container = new WindsorContainer();
-            container.Install(FromAssembly.InThisApplication());
+            container.Install(FromAssembly.InDirectory(new AssemblyFilter(Environment.CurrentDirectory)));
 
             WriteWelcomePage(container);
 

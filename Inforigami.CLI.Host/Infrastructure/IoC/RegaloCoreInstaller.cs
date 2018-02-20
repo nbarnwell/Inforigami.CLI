@@ -1,4 +1,6 @@
-﻿namespace Inforigami.CLI.Host.Infrastructure.IoC
+﻿using System;
+
+namespace Inforigami.CLI.Host.Infrastructure.IoC
 {
     using System.Linq;
 
@@ -31,13 +33,13 @@
                          .ImplementedBy<NoHandlerFoundStrategyFactory>());
 
             container.Register(
-                Classes.FromAssemblyInThisApplication()
+                Classes.FromAssemblyInDirectory(new AssemblyFilter(Environment.CurrentDirectory))
                        .BasedOn(typeof(ICommandHandler<>))
                        .WithServiceBase()
                        .LifestyleScoped());
 
             container.Register(
-                Classes.FromAssemblyInThisApplication()
+                Classes.FromAssemblyInDirectory(new AssemblyFilter(Environment.CurrentDirectory))
                        .BasedOn(typeof(IEventHandler<>))
                        .WithServiceBase()
                        .LifestyleScoped());
